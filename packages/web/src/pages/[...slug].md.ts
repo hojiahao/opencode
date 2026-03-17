@@ -1,5 +1,10 @@
-import type { APIRoute } from "astro"
+import type { APIRoute, GetStaticPaths } from "astro"
 import { getCollection } from "astro:content"
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const docs = await getCollection("docs")
+  return docs.map((doc) => ({ params: { slug: doc.id } }))
+}
 
 export const GET: APIRoute = async ({ params }) => {
   const slug = params.slug || "index"
