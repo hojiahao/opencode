@@ -2,7 +2,7 @@
 import { defineConfig } from "astro/config"
 import starlight from "@astrojs/starlight"
 import solidJs from "@astrojs/solid-js"
-// Static output — no server adapter needed for Vercel
+import cloudflare from "@astrojs/cloudflare"
 import theme from "toolbeam-docs-theme"
 import config from "./config.mjs"
 import { rehypeHeadingIds } from "@astrojs/markdown-remark"
@@ -13,7 +13,10 @@ import { spawnSync } from "child_process"
 export default defineConfig({
   site: config.url,
   base: "/docs",
-  output: "static",
+  output: "server",
+  adapter: cloudflare({
+    imageService: "passthrough",
+  }),
   devToolbar: {
     enabled: false,
   },
